@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Vérification Ticket</title>
+  <style>
+    body { background: #0a0a0a; color: white; font-family: Arial; text-align: center; padding-top: 50px; }
+    .box { background: #1a1a1a; padding: 40px; border-radius: 10px; width: 300px; margin: auto; }
+    input { width: 90%; padding: 15px; font-size: 18px; margin-bottom: 10px; border-radius: 5px; border: none; }
+    button { width: 100%; padding: 15px; font-size: 18px; background: #00ff88; border: none; border-radius: 5px; cursor: pointer; }
+    #message { margin-top: 20px; font-size: 20px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🎟️ Vérification Ticket</h1>
+    <input type="text" id="code" placeholder="Entrez votre code">
+    <button onclick="verifier()">VÉRIFIER</button>
+    <div id="message"></div>
+  </div>
+<script>
+async function verifier() {
+  const code = document.getElementById('code').value;
+  const res = await fetch('/.netlify/functions/verify', {
+    method: 'POST',
+    body: JSON.stringify({code})
+  });
+  const data = await res.json();
+  document.getElementById('message').innerText = data.message;
+}
+</script>
+</body>
+</html>
